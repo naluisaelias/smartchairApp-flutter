@@ -1,0 +1,231 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:smartchair/database/database_services.dart';
+import 'package:smartchair/models/utils.dart';
+import 'package:smartchair/pages/loading_page.dart';
+import 'package:smartchair/pages/dashboards_page.dart';
+
+class CounterPage extends StatefulWidget {
+  @override
+  _CounterPageState createState() => _CounterPageState();
+}
+
+class _CounterPageState extends State<CounterPage> {
+  static const int initialDuration = 30;
+  int _remainingTime = initialDuration;
+  int _contLadoDireito = 0;
+  int _contLadoEsquerdo = 0;
+  int _contLadoFrente = 0;
+  int _contLadoTras = 0;
+  Timer? _timer;
+  bool _isCounting = false;
+  String _message = 'Preparado? Fique sentado por 30 segundos!';
+  bool _isHovered = false; 
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _startCounter() {
+    setState(() {
+      _isCounting = true;
+      _message = 'Contagem iniciada! Mantenha-se confortável.';
+      _resetCounters();
+    });
+
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+      if (_remainingTime > 0) {
+        _remainingTime--;
+        await _checkLadoTorto();
+      } else {
+        _timer?.cancel();
+        _isCounting = false;
+        await _saveData();
+        _resetTimer();
+        _navigateToNextPages(); 
+      }
+      setState(() {});
+    });
+  }
+
+  Future<void> _checkLadoTorto() async {
+    try {
+      final ladoTortoData = await DatabaseService().getLadoTorto();
+
+      if (ladoTortoData['ladodireito'] == true) _contLadoDireito++;
+      if (ladoTortoData['ladoesquerdo'] == true) _contLadoEsquerdo++;
+      if (ladoTortoData['ladofrente'] == true) _contLadoFrente++;
+      if (ladoTortoData['ladotras'] == true) _contLadoTras++;
+    } catch (e) {
+      print('Erro ao buscar dados do lado torto: $e');
+    }
+  }
+
+  Future<void> _saveData() async {
+    await DatabaseService().setContLadoTorto(
+      counts: {
+        'cont-ladodireito': _contLadoDireito,
+        'cont-ladoesquerdo': _contLadoEsquerdo,
+        'cont-ladofrente': _contLadoFrente,
+        'cont-ladotras': _contLadoTras,
+      },
+    );
+  }
+
+  void _resetCounters() {
+    _contLadoDireito = 0;
+    _contLadoEsquerdo = 0;
+    _contLadoFrente = 0;
+    _contLadoTras = 0;
+  }
+
+  void _resetTimer() {
+    _remainingTime = initialDuration;
+  }
+
+  void _navigateToNextPages() async {
+    await Future.delayed(Duration(milliseconds: 450));
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LoadingPage()),
+    );
+
+    await Future.delayed(Duration(milliseconds: 450));
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => DashboardPage()),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Utils.darkBlue,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    height: 200,
+                    width: 200,
+                    child: CircularProgressIndicator(
+                      value: _isCounting ? _remainingTime / initialDuration : 0,
+                      strokeWidth: 10,
+                      valueColor: AlwaysStoppedAnimation<Color>(Utils.orange),
+                    ),
+                  ),
+                  if (_remainingTime > 0)
+                    Text(
+                      '$_remainingTime',
+                      style: TextStyle(
+                        fontSize: 72,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  if (_remainingTime == 0)
+                    Icon(
+                      Icons.check_circle,
+                      size: 200,
+                      color: Utils.orange,
+                    ),
+                ],
+              ),
+              SizedBox(height: 40),
+              Text(
+                _message,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 20),
+              if (!_isCounting) 
+                MouseRegion(
+                  onEnter: (_) {
+                    setState(() {
+                      _isHovered = true; 
+                    });
+                  },
+                  onExit: (_) {
+                    setState(() {
+                      _isHovered = false; 
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: TextButton(
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(Size(200, 60)),
+                        backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            if (_isHovered || states.contains(MaterialState.pressed)) {
+                              return Colors.white.withOpacity(0.7);
+                            }
+                            return Colors.white.withOpacity(0.3);
+                          },
+                        ),
+                        foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            if (_isHovered || states.contains(MaterialState.pressed)) {
+                              return Utils.darkBlue; 
+                            }
+                            return Colors.white;
+                          },
+                        ),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                        ),
+                      ),
+                      onPressed: _startCounter,
+                      child: Text(
+                        'Iniciar Contagem',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              SizedBox(height: 40),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.chair_alt,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    'SMARTCHAIR®',
+                    style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+}

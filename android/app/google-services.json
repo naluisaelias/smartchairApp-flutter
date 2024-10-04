@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "104507924666",
+    "firebase_url": "https://icsmartchair-default-rtdb.firebaseio.com",
+    "project_id": "icsmartchair",
+    "storage_bucket": "icsmartchair.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:104507924666:android:7577f30c5cf67d16d6e283",
+        "android_client_info": {
+          "package_name": "com.example.smartchair"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWc6SOCUDM87U7EiNxU7tcewP6gfmKeH0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
