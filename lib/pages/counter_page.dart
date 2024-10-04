@@ -6,6 +6,8 @@ import 'package:smartchair/pages/loading_page.dart';
 import 'package:smartchair/pages/dashboards_page.dart';
 
 class CounterPage extends StatefulWidget {
+  const CounterPage({super.key});
+
   @override
   _CounterPageState createState() => _CounterPageState();
 }
@@ -34,7 +36,7 @@ class _CounterPageState extends State<CounterPage> {
       _resetCounters();
     });
 
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (_remainingTime > 0) {
         _remainingTime--;
         await _checkLadoTorto();
@@ -85,18 +87,18 @@ class _CounterPageState extends State<CounterPage> {
   }
 
   void _navigateToNextPages() async {
-    await Future.delayed(Duration(milliseconds: 450));
+    await Future.delayed(const Duration(milliseconds: 450));
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LoadingPage()),
+      MaterialPageRoute(builder: (context) => const LoadingPage()),
     );
 
-    await Future.delayed(Duration(milliseconds: 450));
+    await Future.delayed(const Duration(milliseconds: 450));
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => DashboardPage()),
+      MaterialPageRoute(builder: (context) => const DashboardPage()),
     );
   }
 
@@ -113,41 +115,41 @@ class _CounterPageState extends State<CounterPage> {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     height: 200,
                     width: 200,
                     child: CircularProgressIndicator(
                       value: _isCounting ? _remainingTime / initialDuration : 0,
                       strokeWidth: 10,
-                      valueColor: AlwaysStoppedAnimation<Color>(Utils.orange),
+                      valueColor: const AlwaysStoppedAnimation<Color>(Utils.orange),
                     ),
                   ),
                   if (_remainingTime > 0)
                     Text(
                       '$_remainingTime',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 72,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
                   if (_remainingTime == 0)
-                    Icon(
+                    const Icon(
                       Icons.check_circle,
                       size: 200,
                       color: Utils.orange,
                     ),
                 ],
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Text(
                 _message,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               if (!_isCounting) 
                 MouseRegion(
                   onEnter: (_) {
@@ -166,31 +168,31 @@ class _CounterPageState extends State<CounterPage> {
                     ),
                     child: TextButton(
                       style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(Size(200, 60)),
-                        backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            if (_isHovered || states.contains(MaterialState.pressed)) {
+                        minimumSize: WidgetStateProperty.all(const Size(200, 60)),
+                        backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                          (Set<WidgetState> states) {
+                            if (_isHovered || states.contains(WidgetState.pressed)) {
                               return Colors.white.withOpacity(0.7);
                             }
                             return Colors.white.withOpacity(0.3);
                           },
                         ),
-                        foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            if (_isHovered || states.contains(MaterialState.pressed)) {
+                        foregroundColor: WidgetStateProperty.resolveWith<Color>(
+                          (Set<WidgetState> states) {
+                            if (_isHovered || states.contains(WidgetState.pressed)) {
                               return Utils.darkBlue; 
                             }
                             return Colors.white;
                           },
                         ),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
                           ),
                         ),
                       ),
                       onPressed: _startCounter,
-                      child: Text(
+                      child: const Text(
                         'Iniciar Contagem',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -200,8 +202,8 @@ class _CounterPageState extends State<CounterPage> {
                     ),
                   ),
                 ),
-              SizedBox(height: 40),
-              Row(
+              const SizedBox(height: 40),
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(

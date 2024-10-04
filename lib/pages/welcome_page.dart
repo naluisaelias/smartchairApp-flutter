@@ -6,6 +6,8 @@ import 'package:smartchair/pages/loading_page.dart';
 import 'package:smartchair/pages/counter_page.dart';
 
 class WelcomePage extends StatefulWidget {
+  const WelcomePage({super.key});
+
   @override
   _WelcomePageState createState() => _WelcomePageState();
 }
@@ -45,7 +47,7 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   void _startTypingWelcomeAnimation() {
-    _welcomeTimer = Timer.periodic(Duration(milliseconds: 130), (timer) {
+    _welcomeTimer = Timer.periodic(const Duration(milliseconds: 130), (timer) {
       if (_welcomeTextIndex < _welcomeTextPrefix.length) {
         setState(() {
           _displayedWelcomeText += _welcomeTextPrefix[_welcomeTextIndex];
@@ -63,7 +65,7 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   void _startTypingSitAnimation() {
-    _sitTimer = Timer.periodic(Duration(milliseconds: 130), (timer) {
+    _sitTimer = Timer.periodic(const Duration(milliseconds: 130), (timer) {
       if (_sitTextIndex < _sitText.length) {
         setState(() {
           _displayedSitText += _sitText[_sitTextIndex];
@@ -80,18 +82,18 @@ class _WelcomePageState extends State<WelcomePage> {
       _isSeated = true;
     });
 
-    await Future.delayed(Duration(milliseconds: 450));
+    await Future.delayed(const Duration(milliseconds: 450));
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LoadingPage()),
+      MaterialPageRoute(builder: (context) => const LoadingPage()),
     );
 
-    await Future.delayed(Duration(milliseconds: 450));
+    await Future.delayed(const Duration(milliseconds: 450));
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => CounterPage()),
+      MaterialPageRoute(builder: (context) => const CounterPage()),
     );
   }
 
@@ -105,7 +107,7 @@ class _WelcomePageState extends State<WelcomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
@@ -123,24 +125,24 @@ class _WelcomePageState extends State<WelcomePage> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               _displayedWelcomeText,
-              style: TextStyle(fontSize: 24, color: Colors.white),
+              style: const TextStyle(fontSize: 24, color: Colors.white),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               _displayedSitText,
-              style: TextStyle(fontSize: 18, color: Colors.white),
+              style: const TextStyle(fontSize: 18, color: Colors.white),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             if (_sitTextIndex >= _sitText.length) ...[
               Center(
                 child: _isSeated
-                    ? Icon(Icons.check_circle, color: Colors.white, size: 30)
-                    : SizedBox(
+                    ? const Icon(Icons.check_circle, color: Colors.white, size: 30)
+                    : const SizedBox(
                         width: 30,
                         height: 30,
                         child: CircularProgressIndicator(
@@ -150,7 +152,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                       ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               MouseRegion(
                 onEnter: (_) {
                   setState(() {
@@ -168,32 +170,32 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                   child: TextButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) {
+                      backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                        (Set<WidgetState> states) {
                           if (_isHovered ||
-                              states.contains(MaterialState.pressed)) {
+                              states.contains(WidgetState.pressed)) {
                             return Colors.white.withOpacity(0.7);
                           }
                           return Colors.white.withOpacity(0.3);
                         },
                       ),
-                      foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) {
+                      foregroundColor: WidgetStateProperty.resolveWith<Color>(
+                        (Set<WidgetState> states) {
                           if (_isHovered ||
-                              states.contains(MaterialState.pressed)) {
+                              states.contains(WidgetState.pressed)) {
                             return Utils.darkBlue;
                           }
                           return Colors.white;
                         },
                       ),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                       ),
                     ),
                     onPressed: _onButtonPressed,
-                    child: Text(
+                    child: const Text(
                       'Já estou sentado(a)',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),

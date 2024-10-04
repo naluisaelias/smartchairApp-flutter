@@ -5,6 +5,8 @@ import 'package:smartchair/pages/loading_page.dart';
 import 'package:smartchair/database/database_services.dart';
 
 class DashboardPage extends StatefulWidget {
+  const DashboardPage({super.key});
+
   @override
   _DashboardPageState createState() => _DashboardPageState();
 }
@@ -53,14 +55,14 @@ class _DashboardPageState extends State<DashboardPage> {
   void _navigateToLiveMonitoring() async {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LoadingPage()),
+      MaterialPageRoute(builder: (context) => const LoadingPage()),
     );
     
-    await Future.delayed(Duration(milliseconds: 450));
+    await Future.delayed(const Duration(milliseconds: 450));
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => LiveMonitoringPage()),
+      MaterialPageRoute(builder: (context) => const LiveMonitoringPage()),
     );
   }
 
@@ -76,15 +78,15 @@ class _DashboardPageState extends State<DashboardPage> {
           children: [
             Text(
               'Monitore sua saúde, $userName!',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               'Você sabia que apenas 30 segundos podem ser significativos para sua postura?',
               style: TextStyle(
                 fontSize: 16,
@@ -92,7 +94,7 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: GridView.count(
                 crossAxisCount: 2,
@@ -114,25 +116,25 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
               child: TextButton(
                 style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all(Size(double.infinity, 50)),
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
+                  minimumSize: WidgetStateProperty.all(const Size(double.infinity, 50)),
+                  backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                    (Set<WidgetState> states) {
                       return Colors.white.withOpacity(0.1);
                     },
                   ),
-                  foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
+                  foregroundColor: WidgetStateProperty.resolveWith<Color>(
+                    (Set<WidgetState> states) {
                       return Colors.white;
                     },
                   ),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
                 ),
                 onPressed: _navigateToLiveMonitoring,
-                child: Text(
+                child: const Text(
                   'Monitoramento ao vivo da postura',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -141,8 +143,8 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            Row(
+            const SizedBox(height: 20),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
@@ -177,14 +179,14 @@ class _DashboardPageState extends State<DashboardPage> {
         children: [
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               color: Utils.darkBlue,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           SizedBox(
             height: 30,
             width: 30,
@@ -194,10 +196,10 @@ class _DashboardPageState extends State<DashboardPage> {
               color: Utils.darkBlue,
             ),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Text(
             '${(percentage * 100).toStringAsFixed(1)}%',
-            style: TextStyle(
+            style: const TextStyle(
               color: Utils.darkBlue,
               fontWeight: FontWeight.bold,
               fontSize: 14,

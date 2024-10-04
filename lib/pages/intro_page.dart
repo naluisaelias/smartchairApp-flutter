@@ -7,6 +7,8 @@ import 'package:smartchair/pages/welcome_page.dart';
 import 'package:smartchair/pages/live_monitoring_page.dart';
 
 class IntroPage extends StatefulWidget {
+  const IntroPage({super.key});
+
   @override
   _IntroPageState createState() => _IntroPageState();
 }
@@ -34,7 +36,7 @@ class _IntroPageState extends State<IntroPage> {
   }
 
   void _startTypingAnimation() {
-    _timer = Timer.periodic(Duration(milliseconds: 130), (timer) {
+    _timer = Timer.periodic(const Duration(milliseconds: 130), (timer) {
       if (_textIndex < _fullText.length) {
         setState(() {
           _displayedText += _fullText[_textIndex];
@@ -54,13 +56,13 @@ class _IntroPageState extends State<IntroPage> {
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LoadingPage()),
+        MaterialPageRoute(builder: (context) => const LoadingPage()),
       );
 
-      Future.delayed(Duration(milliseconds: 450), () {
+      Future.delayed(const Duration(milliseconds: 450), () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => WelcomePage()),
+          MaterialPageRoute(builder: (context) => const WelcomePage()),
         );
       });
     }
@@ -69,13 +71,13 @@ class _IntroPageState extends State<IntroPage> {
   void _navigateToMonitoring() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LoadingPage()),
+      MaterialPageRoute(builder: (context) => const LoadingPage()),
     );
 
-    Future.delayed(Duration(milliseconds: 450), () {
+    Future.delayed(const Duration(milliseconds: 450), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LiveMonitoringPage()),
+        MaterialPageRoute(builder: (context) => const LiveMonitoringPage()),
       );
     });
   }
@@ -90,13 +92,13 @@ class _IntroPageState extends State<IntroPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Icon(
+            const Icon(
               Icons.chair_alt,
               size: 100,
               color: Colors.white,
             ),
-            SizedBox(height: 8),
-            Center(
+            const SizedBox(height: 8),
+            const Center(
               child: Text(
                 'SMARTCHAIR®',
                 style: TextStyle(
@@ -105,13 +107,13 @@ class _IntroPageState extends State<IntroPage> {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               _displayedText,
-              style: TextStyle(fontSize: 18, color: Colors.white),
+              style: const TextStyle(fontSize: 18, color: Colors.white),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
@@ -125,12 +127,12 @@ class _IntroPageState extends State<IntroPage> {
                         borderSide: BorderSide.none,
                       ),
                       labelText: 'Seu Nome',
-                      labelStyle: TextStyle(color: Colors.white),
+                      labelStyle: const TextStyle(color: Colors.white),
                     ),
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 GestureDetector(
                   onTapDown: (_) => setState(() => _isPressed = true),
                   onTapUp: (_) {
@@ -147,10 +149,10 @@ class _IntroPageState extends State<IntroPage> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             GestureDetector(
               onTap: _navigateToMonitoring,
-              child: Text(
+              child: const Text(
                 'Ir para Monitoramento em Tempo Real',
                 style: TextStyle(
                   color: Utils.orange,

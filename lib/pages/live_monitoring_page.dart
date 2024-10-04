@@ -4,6 +4,8 @@ import 'package:smartchair/models/utils.dart';
 import 'package:smartchair/database/database_services.dart';
 
 class LiveMonitoringPage extends StatefulWidget {
+  const LiveMonitoringPage({super.key});
+
   @override
   _LiveMonitoringPageState createState() => _LiveMonitoringPageState();
 }
@@ -37,7 +39,7 @@ class _LiveMonitoringPageState extends State<LiveMonitoringPage> {
   }
 
   void _startPeriodicFetch() {
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       _fetchLadoTorto();
       _startPeriodicFetch();
     });
@@ -46,24 +48,20 @@ class _LiveMonitoringPageState extends State<LiveMonitoringPage> {
   Future<void> _fetchLadoTorto() async {
     final fetchedData = await DatabaseService().getLadoTorto();
     
-    if (fetchedData != null) {
-      if (mounted) {
-        setState(() {
-          ladoTorto = {
-            'encostodireito': fetchedData['ladodireito'] ?? false,
-            'encostoesquerdo': fetchedData['ladoesquerdo'] ?? false,
-            'assentonafronte': fetchedData['ladofrente'] ?? false,
-            'assentoatras': fetchedData['ladotras'] ?? false,
-          };
-        });
-      }
-    } else {
-      print('Dados de lado torto não disponíveis.');
+    if (mounted) {
+      setState(() {
+        ladoTorto = {
+          'encostodireito': fetchedData['ladodireito'] ?? false,
+          'encostoesquerdo': fetchedData['ladoesquerdo'] ?? false,
+          'assentonafronte': fetchedData['ladofrente'] ?? false,
+          'assentoatras': fetchedData['ladotras'] ?? false,
+        };
+      });
     }
-  }
+    }
 
   void _startTypingSitAnimation() {
-    _sitTimer = Timer.periodic(Duration(milliseconds: 130), (timer) {
+    _sitTimer = Timer.periodic(const Duration(milliseconds: 130), (timer) {
       if (_sitTextIndex < _sitText.length) {
         if (mounted) {
           setState(() {
@@ -91,7 +89,7 @@ class _LiveMonitoringPageState extends State<LiveMonitoringPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'Monitoramento da Postura',
                 style: TextStyle(
                   fontSize: 28,
@@ -99,19 +97,19 @@ class _LiveMonitoringPageState extends State<LiveMonitoringPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 _displayedSitText,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.chair_alt,
                     size: 300,
                     color: Colors.white,
@@ -136,7 +134,7 @@ class _LiveMonitoringPageState extends State<LiveMonitoringPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               MouseRegion(
                 onEnter: (_) {
                   setState(() {
@@ -154,30 +152,30 @@ class _LiveMonitoringPageState extends State<LiveMonitoringPage> {
                   ),
                   child: TextButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) {
-                          if (_isHovered || states.contains(MaterialState.pressed)) {
+                      backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                        (Set<WidgetState> states) {
+                          if (_isHovered || states.contains(WidgetState.pressed)) {
                             return Colors.white.withOpacity(0.7);
                           }
                           return Colors.white.withOpacity(0.3);
                         },
                       ),
-                      foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) {
-                          if (_isHovered || states.contains(MaterialState.pressed)) {
+                      foregroundColor: WidgetStateProperty.resolveWith<Color>(
+                        (Set<WidgetState> states) {
+                          if (_isHovered || states.contains(WidgetState.pressed)) {
                             return Utils.darkBlue;
                           }
                           return Colors.white;
                         },
                       ),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                       ),
                     ),
                     onPressed: _onBackButtonPressed,
-                    child: Text(
+                    child: const Text(
                       'Voltar',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
