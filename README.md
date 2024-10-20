@@ -1,15 +1,14 @@
-# Smart Chair
+🪑 Smart Chair
 
-Smart Chair é um aplicativo Flutter projetado para ajudar os usuários a monitorar e melhorar sua postura em tempo real. O aplicativo fornece feedback visual e estatísticas sobre a postura do usuário, incentivando hábitos saudáveis.
+Smart Chair é um aplicativo Flutter desenvolvido para monitorar e melhorar a postura dos usuários em tempo real. Funciona em conjunto com uma cadeira inteligente, captando dados de postura e enviando-os ao app para análise e feedback. O aplicativo oferece animações e estatísticas visuais para promover hábitos de postura mais saudáveis e confortáveis.
 
-## Funcionalidades
+🚀 Funcionalidades
 
-- Monitoramento da postura em tempo real.
-- Animações e feedbacks visuais.
-- Interface amigável e responsiva.
+📡 Monitoramento em tempo real da postura corporal.
+🎨 Animações interativas e feedback visual sobre a postura.
+📊 Estatísticas detalhadas para ajudar no acompanhamento do progresso.
+🖥️ Interface amigável e responsiva, fácil de usar.
+🛠️ Tecnologias Utilizadas
 
-## Tecnologias Utilizadas
-
-- **Flutter**: Um framework UI para construir aplicativos nativos de alta performance para dispositivos móveis.
-- **Firebase**: Para gerenciamento de dados em tempo real e autenticação.
-
+Flutter: Framework UI para construir aplicativos nativos com alta performance.
+Firebase: Gerenciamento de dados em tempo real e autenticação de usuários.
